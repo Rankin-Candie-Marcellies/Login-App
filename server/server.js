@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require('path');
+const users = require("./users")
 const PORT = 3000;
 // Route Imports
 
@@ -17,8 +18,14 @@ app.get("/", (req, res) => {
 // handle requests fro static files -> specify the root directory to serve static assets
 app.use(express.static(path.resolve(__dirname, '../client')));
 
-// create a route handler
-// app.use()
+// post request to login
+app.post('/login',
+users.post,
+(req,res) =>{
+  
+}
+)
+
 
 // Unknown route handler
 app.use((req, res) => res.status(404).send("Error, unkown request"));
