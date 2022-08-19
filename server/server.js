@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const path = require('path');
-const users = require("./users")
 const PORT = 3000;
 // Route Imports
 
@@ -10,21 +9,18 @@ const PORT = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Landing
+// serving the index html
 app.get("/", (req, res) => {
   return res.status(200).sendFile(path.resolve(__dirname, '../index.html'))
 })
 
-// handle requests fro static files -> specify the root directory to serve static assets
+// handle requests for static files 
 app.use(express.static(path.resolve(__dirname, '../client')));
 
-// post request to login
-app.post('/login',
-users.post,
-(req,res) =>{
-  
-}
-)
+// route handlers
+app.use('/login', loginApi);
+app.use('/signup', signUpApi);
+app.use('/forgot', forgotPasswordApi)
 
 
 // Unknown route handler
@@ -46,3 +42,12 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`))
 
 module.exports = app
+
+/*
+/login
+  post req
+/signup
+  post
+/forgot (password)
+ post
+*/
